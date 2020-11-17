@@ -1,0 +1,10 @@
+a = 0.95; b = 0.7; e = .25; g = 0.6; d = 3.5; xi = 0.1  (*Set the \
+parameters for the dynamical system.*)
+x = .1; y = 0; z = 0; points = {{.1, 0, 
+   0}}; (*Set the initial value for the dynamical system. *)
+i := AppendTo[
+  points, {x = N[x + ((z - b)*x - d*y)/100], 
+   y = N[y + (d*x + (z - b)*y)/100], 
+   z = N[z + (g + a*z - z^3/3 - (x^2 + y^2)*(1 + e*z) + xi*z*x^3)/
+       100]}] (*Create a solution using Newton's Method. The value 100 controls the step-size.*)
+Export["Aizawa.csv", points] (*Export the file*)
