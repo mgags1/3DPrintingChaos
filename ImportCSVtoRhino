@@ -1,0 +1,30 @@
+import rhinoscriptsyntax as rs
+import Rhino as Rhino
+
+def ReadPointsDef(filename):
+
+    if not filename: return
+
+    #read each line from the file
+    file = open(filename, "r")
+    #list of lines
+    contents = file.readlines()
+    #contents = [line.rstrip('\n') for line in file]
+    file.close()
+    
+    # points=[]
+    points3d = Rhino.Collections.Point3dList()
+    for text in contents:
+        items = text.strip("()\n").split(",")    
+        if len(items)==3:
+            x = float(items[0])
+            y = float(items[1])
+            z = float(items[2])
+            points3d.Add(x,y,z)
+    
+    #contents = [__point_from_string(line) for line in contents]
+    #return points
+    return points3d
+
+points = ReadPointsDef("C:\Visualizing Mathematics\Aizawa Attractor\Aizawa.csv") #Location of CSV file
+interCurve = rs.AddInterpCurve(points,3)
